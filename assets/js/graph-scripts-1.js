@@ -15,11 +15,12 @@ function makeGraphs(error, upsellData) {
 
      show_employee_selector(ndx);
      show_period_selector(ndx);
+     show_single_v_doubles(ndx);
 //    show_single_v_double_selector(ndx);
     
     dc.renderAll();
 //must be called or charts wont render.   
-console.log('upsellData') 
+console.log('upsellData'); 
 }
 
 //selection boxes
@@ -54,3 +55,34 @@ function show_period_selector(ndx) {
 //        .dimension(dim)
 //        .group(group);
 //}
+
+function show_single_v_doubles(ndx) {
+    var ndx = crossfilter(upsellData);
+        var name_dim = ndx.dimension(dc.pluck('employee'));
+        var spendByNameStoreA = name_dim.group().reduceSum(function (d) {
+                if (d.double === 'A') {
+                    return +d.total;
+                } else {
+                    return 0;
+                }
+            });
+        var spendByNameStoreB = name_dim.group().reduceSum(function (d) {
+                if (d.single === 'B') {
+                    return +d.total;
+                } else {
+                    return 0;
+                }
+            });
+        var stackedChart = dc.barChart("#stacked-chart-here");
+        stackedChart
+            .width(500)
+            .height(400)
+            .dimension(name_dim)
+            .group(spendByNameStoreA, "double")
+            .stack(spendByNameStoreB, "single")
+            .x(d3.scale.ordinal())
+            .xUnits(dc.units.ordinal)
+            .legend(dc.legend().x(420).y(0).itemHeight(15).gap(5));
+        stackedChart.margins().right = 100;
+        dc.renderAll();
+}
