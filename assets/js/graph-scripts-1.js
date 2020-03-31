@@ -17,5 +17,20 @@ function makeGraphs(error, upsellData) {
     show_period_selector(ndx);
 
     dc.renderAll();
-//must be called or charts wont render.    
+//must be called or charts wont render.   
+console.log(upsellData) 
+}
+
+//Pie chart
+function pie_chart_doubles(ndx) {
+    var dim = ndx.dimension(dc.pluck('double'));
+    var group = dim.group().reduceSum(dc.pluck('single'));
+    dc.pieChart('#double-percentage')
+        .width(700)
+        .height(360)
+        .radius(180)
+        .legend(dc.legend().x(50).y(30).itemHeight(15).gap(5))
+        .transitionDuration(1500)
+        .dimension(dim)
+        .group(group);
 }
