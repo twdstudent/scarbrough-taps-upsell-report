@@ -14,12 +14,19 @@ function makeGraphs(error, upsellData) {
     var ndx = crossfilter(upsellData);
 
     show_single_v_double_selector(ndx);
-    show_employee_selector(ndx);
-    show_period_selector(ndx);
-
+    
     dc.renderAll();
 //must be called or charts wont render.   
 console.log('upsellData') 
+}
+
+function show_employee_selector(ndx) {
+    var dim = ndx.dimension(dc.pluck('employee'));
+    var group = dim.group();
+
+    dc.selectMenu("#employee-selector")
+        .dimension(dim)
+        .group(group);
 }
 
 //Pie chart
