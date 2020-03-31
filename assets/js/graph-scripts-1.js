@@ -13,16 +13,17 @@ queue()
 function makeGraphs(error, upsellData) {
     var ndx = crossfilter(upsellData);
 
+    show_single_v_double_selector(ndx);
     show_employee_selector(ndx);
     show_period_selector(ndx);
 
     dc.renderAll();
 //must be called or charts wont render.   
-console.log(upsellData) 
+console.log('upsellData') 
 }
 
 //Pie chart
-function pie_chart_doubles(ndx) {
+function show_single_v_double_selector(ndx) {
     var dim = ndx.dimension(dc.pluck('double'));
     var group = dim.group().reduceSum(dc.pluck('single'));
     dc.pieChart('#double-percentage')
