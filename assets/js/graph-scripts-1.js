@@ -13,13 +13,16 @@ queue()
 function makeGraphs(error, upsellData) {
     var ndx = crossfilter(upsellData);
 
-    show_single_v_double_selector(ndx);
+     show_employee_selector(ndx);
+     show_period_selector(ndx);
+//    show_single_v_double_selector(ndx);
     
     dc.renderAll();
 //must be called or charts wont render.   
 console.log('upsellData') 
 }
 
+//selection boxes
 function show_employee_selector(ndx) {
     var dim = ndx.dimension(dc.pluck('employee'));
     var group = dim.group();
@@ -29,16 +32,25 @@ function show_employee_selector(ndx) {
         .group(group);
 }
 
-//Pie chart
-function show_single_v_double_selector(ndx) {
-    var dim = ndx.dimension(dc.pluck('double'));
-    var group = dim.group().reduceSum(dc.pluck('single'));
-    dc.pieChart('#double-percentage')
-        .width(700)
-        .height(360)
-        .radius(180)
-        .legend(dc.legend().x(50).y(30).itemHeight(15).gap(5))
-        .transitionDuration(1500)
+function show_period_selector(ndx) {
+    var dim = ndx.dimension(dc.pluck('period'));
+    var group = dim.group();
+
+    dc.selectMenu("#period-selector")
         .dimension(dim)
         .group(group);
 }
+
+//Pie chart
+//function show_single_v_double_selector(ndx) {
+//    var dim = ndx.dimension(dc.pluck('double'));
+//    var group = dim.group().reduceSum(dc.pluck('single'));
+//    dc.pieChart('#double-percentage')
+//        .width(700)
+//        .height(360)
+//       .radius(180)
+//        .legend(dc.legend().x(50).y(30).itemHeight(15).gap(5))
+//        .transitionDuration(1500)
+//        .dimension(dim)
+//        .group(group);
+//}
