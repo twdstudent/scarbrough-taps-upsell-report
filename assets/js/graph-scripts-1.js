@@ -57,7 +57,6 @@ function show_period_selector(ndx) {
 //}
 
 function show_single_v_doubles(ndx) {
-    var ndx = crossfilter(upsellData);
         var name_dim = ndx.dimension(dc.pluck('employee'));
         var spendByNameStoreA = name_dim.group().reduceSum(function (d) {
                 if (d.double === 'A') {
