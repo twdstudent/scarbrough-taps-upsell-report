@@ -15,10 +15,11 @@ function makeGraphs(error, upsellData) {
 
      show_employee_selector(ndx);
      show_period_selector(ndx);
+     show_percent_singles_doubles(ndx, "single", "#percenatage-single");
+     show_percent_singles_doubles(ndx, "Double", "#percenatage-double");
     
     dc.renderAll();
 //must be called or charts wont render.   
-
 }
 
 //selection boxes
@@ -40,4 +41,8 @@ function show_period_selector(ndx) {
         .dimension(dim)
         .group(group);
 }
+
+//percentage display
+
+
 
