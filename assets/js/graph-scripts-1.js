@@ -15,13 +15,13 @@ function makeGraphs(error, upsellData) {
 
      show_employee_selector(ndx);
      show_period_selector(ndx);
-     show_single_v_doubles(ndx);
-//    show_single_v_double_selector(ndx);
+     show_single_v_double_selector(ndx);
     
     dc.renderAll();
 //must be called or charts wont render.   
-console.log('upsellData'); 
+
 }
+
 
 //selection boxes
 function show_employee_selector(ndx) {
@@ -43,45 +43,15 @@ function show_period_selector(ndx) {
 }
 
 //Pie chart
-//function show_single_v_double_selector(ndx) {
-//    var dim = ndx.dimension(dc.pluck('double'));
-//    var group = dim.group().reduceSum(dc.pluck('single'));
-//    dc.pieChart('#double-percentage')
-//        .width(700)
-//        .height(360)
-//       .radius(180)
-//        .legend(dc.legend().x(50).y(30).itemHeight(15).gap(5))
-//        .transitionDuration(1500)
-//        .dimension(dim)
-//        .group(group);
-//}
-
-function show_single_v_doubles(ndx) {
-        var name_dim = ndx.dimension(dc.pluck('employee'));
-        var spendByNameStoreA = name_dim.group().reduceSum(function (d) {
-                if (d.double === 'A') {
-                    return +d.total;
-                } else {
-                    return 0;
-                }
-            });
-        var spendByNameStoreB = name_dim.group().reduceSum(function (d) {
-                if (d.single === 'B') {
-                    return +d.total;
-                } else {
-                    return 0;
-                }
-            });
-        var stackedChart = dc.barChart("#stacked-chart-here");
-        stackedChart
-            .width(500)
-            .height(400)
-            .dimension(name_dim)
-            .group(spendByNameStoreA, "double")
-            .stack(spendByNameStoreB, "single")
-            .x(d3.scale.ordinal())
-            .xUnits(dc.units.ordinal)
-            .legend(dc.legend().x(420).y(0).itemHeight(15).gap(5));
-        stackedChart.margins().right = 100;
-        dc.renderAll();
+function show_single_v_double_selector(ndx) {
+    var dim = ndx.dimension(dc.pluck('double'));
+    var group = dim.group().reduceSum(dc.pluck('single'));
+    dc.pieChart('#double-percentage')
+        .width(700)
+        .height(360)
+       .radius(180)
+        .legend(dc.legend().x(50).y(30).itemHeight(15).gap(5))
+        .transitionDuration(1500)
+        .dimension(dim)
+        .group(group);
 }
